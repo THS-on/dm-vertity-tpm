@@ -11,7 +11,7 @@ and storing the changes into PCR 10 of the TPM.
 * cmake
 * g++ or clang
 
-# Build
+## Build
  * `cmake .`
  * `make`
 
