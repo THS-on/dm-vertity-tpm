@@ -1,0 +1,9 @@
+[Unit]
+Description=dm-verity tpm agent
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dm-verity-agent @DM_VERITY_DEVICE@ @LOG_PATH@
+
+[Install]
+WantedBy=multi-user.target
