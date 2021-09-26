@@ -117,18 +117,20 @@ bool extend_and_log(const std::string extend, ESYS_TR pcr) {
 void loop(size_t sleep_duration, const std::string device, ESYS_TR pcr) {
   std::string root_hash = get_root_hash(device);
   bool last_status = true;
+  bool first_run = true;
 
   while (running) {
     bool good = get_verity_status(device);
     std::string status = good ? "valid" : "corrupted";
     spdlog::info("Status of {} is {}.", device, status);
     // Only log on change
-    if (good != last_status) {
+    if (good != last_status || first_run) {
       last_status = good;
       std::string extend = device + " " + root_hash + " " + status;
       extend_and_log(extend, pcr);
     }
     sleep(sleep_duration);
+    first_run = false;
   }
 
   spdlog::info("Program exited. Extend TPM with invalid value.");
